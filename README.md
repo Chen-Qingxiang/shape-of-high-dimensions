@@ -60,7 +60,7 @@ This is a GitHub Pages **project site**, so Vite is configured to serve assets f
 base: '/shape-of-high-dimensions/'
 ```
 
-The config derives the base from `GITHUB_REPOSITORY` during GitHub Actions builds, and it can be overridden with `VITE_BASE_PATH` if the repository is renamed, for example `VITE_BASE_PATH=/high-dimensional-ball-lab/ npm run build`.
+The config derives the base from `GITHUB_REPOSITORY` during GitHub Actions builds, and it can be overridden with `VITE_BASE_PATH` if the repository is renamed, for example `VITE_BASE_PATH=/high-dimensional-ball-lab/ npm run build`. The deploy workflow pins `VITE_BASE_PATH=/shape-of-high-dimensions/` so the published GitHub Pages site uses the current repository path.
 
 Deployment is handled by `.github/workflows/deploy.yml` using the official GitHub Pages Actions flow:
 
@@ -69,6 +69,8 @@ Deployment is handled by `.github/workflows/deploy.yml` using the official GitHu
 3. Deploy with `actions/deploy-pages`.
 
 The workflow runs on pushes to `main` and can also be launched manually with `workflow_dispatch`.
+
+If the page appears blank, first check that the deployed HTML references assets under `/shape-of-high-dimensions/assets/...` and that the browser console does not show a module 404. The app also includes a render fallback so component-level runtime errors should show a diagnostic panel instead of a pure white screen.
 
 To enable deployment in GitHub:
 

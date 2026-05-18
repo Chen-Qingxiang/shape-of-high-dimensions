@@ -1,4 +1,4 @@
-import katex from 'katex';
+import * as katex from 'katex';
 import 'katex/dist/katex.min.css';
 import type { ReactNode } from 'react';
 
@@ -67,8 +67,13 @@ export function SliderControl({ id, label, value, min, max, step = 1, suffix = '
 }
 
 export function FormulaBlock({ tex, display = true }: { tex: string; display?: boolean }) {
-  const html = katex.renderToString(tex, { displayMode: display, throwOnError: false, strict: 'ignore' });
-  return <div className="formula-block" dangerouslySetInnerHTML={{ __html: html }} />;
+  try {
+    const html = katex.renderToString(tex, { displayMode: display, throwOnError: false, strict: 'ignore' });
+    return <div className="formula-block" dangerouslySetInnerHTML={{ __html: html }} />;
+  } catch (error) {
+    console.warn('Could not render formula:', tex, error);
+    return <pre className="formula-block formula-fallback">{tex}</pre>;
+  }
 }
 
 export function ExplanationBox({ children, tone = 'default' }: { children: ReactNode; tone?: 'default' | 'warning' | 'success' }) {

@@ -29,6 +29,8 @@ import {
   shellOutsideFraction,
 } from './math';
 
+const tex = String.raw;
+
 const volumeData = Array.from({ length: 100 }, (_, index) => {
   const n = index + 1;
   const volume = ballVolume(n, 1);
@@ -112,7 +114,7 @@ function App() {
           <div className="control-panel">
             <SliderControl id="dimension" label="Dimension n" min={1} max={100} value={dimension} onChange={setDimension} />
             <SliderControl id="radius" label="Radius r" min={0.1} max={3} step={0.1} value={radius} onChange={setRadius} />
-            <FormulaBlock tex="V_n(r)=\frac{\pi^{n/2}}{\Gamma(n/2+1)}r^n" />
+            <FormulaBlock tex={tex`V_n(r)=\frac{\pi^{n/2}}{\Gamma(n/2+1)}r^n`} />
             <StatCard label="current Vₙ(r)" value={formatNumber(selectedVolume)} detail={`log volume = ${formatNumber(logBallVolume(dimension, radius))}`} />
             <ExplanationBox>
               The unit ball first grows, reaching its maximum at dimension 5, then collapses toward zero. Radius matters exponentially: multiplying r is really multiplying volume by rⁿ.
@@ -139,7 +141,7 @@ function App() {
           <div className="control-panel">
             <SliderControl id="shell-dimension" label="Dimension n" min={1} max={100} value={shellDimension} onChange={setShellDimension} />
             <SliderControl id="inner-radius" label="Inner radius r" min={0} max={1} step={0.01} value={innerRadius} onChange={setInnerRadius} />
-            <FormulaBlock tex="\text{fraction inside radius }r=r^n" />
+            <FormulaBlock tex={tex`\text{fraction inside radius }r=r^n`} />
             <div className="mini-grid">
               <StatCard label="inside core" value={formatPercent(inside)} />
               <StatCard label="outer shell" value={formatPercent(outside)} />
@@ -164,7 +166,7 @@ function App() {
       <SectionCard eyebrow="03" title="Cube vs Ball Comparison">
         <div className="split-grid">
           <div className="control-panel">
-            <FormulaBlock tex="\frac{V_n(1)}{2^n}=\Pr\{X\in[-1,1]^n:\lVert X\rVert_2\le 1\}" />
+            <FormulaBlock tex={tex`\frac{V_n(1)}{2^n}=\Pr\{X\in[-1,1]^n:\lVert X\rVert_2\le 1\}`} />
             <StatCard label="cube volume 2ⁿ" value={formatNumber(cubeVolume(dimension))} />
             <StatCard label="unit ball / cube" value={formatPercent(selectedRatio)} detail="plotted as log₁₀(probability)" />
             <ExplanationBox>
@@ -230,7 +232,7 @@ function App() {
           <div className="control-panel">
             <SliderControl id="distance-dimension" label="Dimension n" min={1} max={100} value={distanceDimension} onChange={setDistanceDimension} />
             <button className="primary-button" onClick={() => setDistanceSeed((seed) => seed + 1)}>Regenerate distances</button>
-            <FormulaBlock tex="d=\sqrt{x_1^2+\cdots+x_n^2}\qquad \mathbb{E}[d]\approx\sqrt{n/3}" />
+            <FormulaBlock tex={tex`d=\sqrt{x_1^2+\cdots+x_n^2}\qquad \mathbb{E}[d]\approx\sqrt{n/3}`} />
             <div className="mini-grid">
               <StatCard label="√(n / 3)" value={formatNumber(typicalDistance)} />
               <StatCard label="sample mean distance" value={formatNumber(meanDistance)} />
@@ -259,7 +261,7 @@ function App() {
           <summary>Why does Γ appear in the ball-volume formula?</summary>
           <div className="gamma-grid">
             <div>
-              <FormulaBlock tex="\Gamma(k+1)=k!\qquad\Gamma(x+1)=x\Gamma(x)" />
+              <FormulaBlock tex={tex`\Gamma(k+1)=k!\qquad\Gamma(x+1)=x\Gamma(x)`} />
               <p>Factorials count the even-dimensional cases. The gamma function smoothly extends factorials to half-integers, which is why Γ(n/2 + 1) handles odd dimensions too.</p>
             </div>
             <table>
