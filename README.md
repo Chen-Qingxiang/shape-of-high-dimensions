@@ -54,11 +54,13 @@ npm run preview
 
 ## Deployment
 
-This is a GitHub Pages **project site**, so Vite is configured with:
+This is a GitHub Pages **project site**, so Vite is configured to serve assets from the repository-name base path. By default that is:
 
 ```ts
 base: '/shape-of-high-dimensions/'
 ```
+
+The config derives the base from `GITHUB_REPOSITORY` during GitHub Actions builds, and it can be overridden with `VITE_BASE_PATH` if the repository is renamed, for example `VITE_BASE_PATH=/high-dimensional-ball-lab/ npm run build`.
 
 Deployment is handled by `.github/workflows/deploy.yml` using the official GitHub Pages Actions flow:
 
